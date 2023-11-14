@@ -9,6 +9,7 @@ const fileUpload = require("express-fileupload");
 const connectDB = require("./db/connect");
 const userRouter = require("./routes/user");
 const uploadsRouter = require("./routes/uploads");
+const notesRouter = require("./routes/notes");
 
 //* MIDDLEWARE IMPORTS
 const notFound = require("./middlewares/not-found");
@@ -26,6 +27,7 @@ app.use(express.static("./public"));
 // routes
 app.use("/user", userRouter);
 app.use("/uploads", uploadsRouter);
+app.use("/notes", notesRouter);
 app.use(errorHandler);
 app.use(notFound);
 const port = process.env.PORT || 5000;
