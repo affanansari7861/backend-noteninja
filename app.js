@@ -26,7 +26,7 @@ app.use(
     secret: "asdf",
     resave: true,
     saveUninitialized: false,
-    // maxAge: 1000 * 60 * 60 * 60 * 7,
+    maxAge: 1000 * 60 * 60 * 60 * 7,
   })
 );
 app.use(passport.initialize());
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://note-ninja.netlify.app"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
