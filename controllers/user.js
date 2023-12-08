@@ -8,17 +8,19 @@ const {
 
 //*LOGIN USER
 const login = async (req, res) => {
-  console.log("logging");
   const USER = req.body;
-  const user = await User.findOne({ username: USER.username });
-  if (!user)
-    throw new UnAuthenticatedError(`no user with username ${USER.username}`);
+  const user = req.user;
+  // if (!user) {
+  //   req.logOut({ keepSessionInfo: false }, (done) => null);
+  //   throw new UnAuthenticatedError(`no user with username ${USER.username}`);
+  // }
   const PasswordMatches = await bcrypt.compare(USER.password, user.password);
-  if (!PasswordMatches) throw new UnAuthenticatedError("password do not match");
-
+  if (!PasswordMatches) {
+    req.logOut({ keepSessionInfo: false }, (done) => null);
+    throw new UnAuthenticatedError("password do not match");
+  }
   const { username, email, fullname, _id } = user;
-  const token = jwt.sign({ username, _id }, process.env.JWT_SECRET);
-  res.status(201).json({ token, user: { username, fullname, email, _id } });
+  res.status(201).json({ username, fullname, email, _id });
 };
 
 //*VERIFY USER
@@ -33,11 +35,7 @@ const getUser = async (req, res) => {
 
 //*REGISTER USER
 const register = async (req, res) => {
-  const salt = await bcrypt.genSalt(10);
-  const password = await bcrypt.hash(req.body.password, salt);
-  const user = await User.create({ ...req.body, password });
-  const { username, email, fullname, _id } = user;
-  const token = jwt.sign({ username, _id }, process.env.JWT_SECRET);
-  res.status(201).json({ token, user: { username, fullname, email, _id } });
+  const { username, email, fullname, _id } = req.user;
+  res.status(201).json({ username, fullname, email, _id });
 };
 module.exports = { login, getUser, register };

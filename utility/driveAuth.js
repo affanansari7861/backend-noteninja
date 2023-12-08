@@ -10,10 +10,7 @@ const savedCreds = {
   refresh_token: process.env.refresh_token,
 };
 
-const SCOPES = [
-  "https://www.googleapis.com/auth/drive.metadata.readonly",
-  "https://www.googleapis.com/auth/drive.file",
-];
+const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
 
 async function authorize() {
   return google.auth.fromJSON(savedCreds);

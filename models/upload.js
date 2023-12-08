@@ -33,6 +33,9 @@ const uploadSchema = new mongoose.Schema({
     type: String,
     required: [true, "please provide your course"],
   },
+  comments: {
+    // {comment:St}
+  },
 });
 
 module.exports = mongoose.model("uploads", uploadSchema);

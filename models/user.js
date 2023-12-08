@@ -10,10 +10,11 @@ const userSchema = new mongoose.Schema({
     required: [true, "please provide username"],
     unique: [true, "username is already taken"],
   },
+  googleId: String,
+  githubId: String,
   password: String,
   email: {
     type: String,
-    required: [true, "please enter your email"],
     unique: [true, "email is already registered with another acccount"],
   },
   uploads: [String],
