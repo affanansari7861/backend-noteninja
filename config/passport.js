@@ -51,6 +51,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        console.log("loging with google");
         const user = await User.find({ googleId: profile.id });
         if (user[0]) return done(null, user[0]);
 
