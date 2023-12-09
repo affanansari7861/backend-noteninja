@@ -50,22 +50,29 @@ passport.use(
       callbackURL: "/auth/google/redirect",
     },
     async (accessToken, refreshToken, profile, done) => {
-      const user = await User.find({ googleId: profile.id });
-      if (user[0]) return done(null, user[0]);
+      try {
+        const user = await User.find({ googleId: profile.id });
+        if (user[0]) return done(null, user[0]);
 
-      const newUser = await User.create({
-        googleId: profile.id,
-        fullname: profile.displayName,
-        username: `${profile.name.givenName}${profile.name.familyName}`,
-        email: profile._json.email,
-        uploads: [],
-      });
+        const newUser = await User.create({
+          googleId: profile.id,
+          fullname: profile.displayName,
+          username: `${profile.name.givenName}${profile.name.familyName}`,
+          email: profile._json.email,
+          uploads: [],
+        });
 
-      if (!newUser)
-        return done(
-          new CustomApiError("something went wrong please try again later", 500)
-        );
-      done(null, newUser);
+        if (!newUser)
+          return done(
+            new CustomApiError(
+              "something went wrong please try again later",
+              500
+            )
+          );
+        done(null, newUser);
+      } catch (error) {
+        console.log(error);
+      }
     }
   )
 );

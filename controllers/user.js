@@ -29,8 +29,8 @@ const getUser = async (req, res) => {
   if (!user)
     throw new CustomApiError("some thing went wrong please log in again");
   const { username, email, fullname, _id } = user;
-  const token = jwt.sign({ username, _id }, process.env.JWT_SECRET);
-  res.status(201).json({ token, user: { username, fullname, email, _id } });
+
+  res.status(201).json({ username, fullname, email, _id });
 };
 
 //*REGISTER USER

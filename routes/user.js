@@ -28,6 +28,7 @@ router.route("/get").get(authUser, (req, res) => {
 router.route("/google").get(
   passport.authenticate("google", {
     scope: ["profile", "email"],
+    failureRedirect: "https://note-ninja.netlify.app/user",
   })
 );
 router
