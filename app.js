@@ -35,8 +35,6 @@ app.use(
     // keys: ["keyasdsa"],
     resave: true,
     saveUninitialized: false,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: "none",
   })
 );
 app.use(passport.initialize());
