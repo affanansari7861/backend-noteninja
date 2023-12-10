@@ -6,6 +6,7 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const passportSetup = require("./config/passport");
 const session = require("express-session");
+// const session = require("cookie-session");
 const passport = require("passport");
 
 // * LOCAL IMPORTS
@@ -24,9 +25,10 @@ const server = require("http").createServer(app);
 app.use(
   session({
     secret: "asdf",
+    // keys: ["keyasdsa"],
     resave: true,
     saveUninitialized: false,
-    maxAge: 1000 * 60 * 60 * 60 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
   })
 );
 app.use(passport.initialize());
@@ -36,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true }));
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://note-ninja.netlify.app"],
+    origin: [process.env.CLIENT_URL],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

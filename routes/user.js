@@ -28,7 +28,7 @@ router.route("/get").get(authUser, (req, res) => {
 router.route("/google").get(
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    failureRedirect: "https://note-ninja.netlify.app/user",
+    failureRedirect: `${process.env.CLIENT_URL}/user`,
   })
 );
 router
@@ -36,17 +36,14 @@ router
   .get(passport.authenticate("github", { scope: ["user:email"] }));
 
 router.route("/google/redirect").get(
-  (req, res, next) => {
-    log("reached callback");
-    next();
-  },
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173",
+    successRedirect: process.env.CLIENT_URL,
   })
 );
 router.route("/github/redirect").get(
   passport.authenticate("github", {
-    successRedirect: "http://localhost:5173",
+    successRedirect: process.env.CLIENT_URL,
+    // failureRedirect:''
   })
 );
 module.exports = router;

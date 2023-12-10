@@ -10,7 +10,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const GTIHUBSTRATEGY = require("passport-github2").Strategy;
 
 passport.serializeUser((user, done) => {
-  // console.log(user);
   done(null, user._id);
 });
 passport.deserializeUser(async (id, done) => {
