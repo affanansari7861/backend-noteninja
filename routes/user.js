@@ -36,10 +36,6 @@ router
   .get(passport.authenticate("github", { scope: ["user:email"] }));
 
 router.route("/google/redirect").get(
-  (req, res, next) => {
-    console.log("reached callback url");
-    next();
-  },
   passport.authenticate("google", {
     successRedirect: process.env.CLIENT_URL,
   })

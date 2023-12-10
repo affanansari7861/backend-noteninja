@@ -33,8 +33,10 @@ app.use(
   session({
     secret: "asdf",
     // keys: ["keyasdsa"],
+    maxAge: 1000 * 60 * 60 * 24,
     resave: true,
     saveUninitialized: false,
+    sameSite: "none",
   })
 );
 app.use(passport.initialize());
