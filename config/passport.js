@@ -63,13 +63,7 @@ passport.use(
           uploads: [],
         });
 
-        if (!newUser)
-          return done(
-            new CustomApiError(
-              "something went wrong please try again later",
-              500
-            )
-          );
+        if (!newUser) return done(null, false);
         done(null, newUser);
       } catch (error) {
         console.log(error);
