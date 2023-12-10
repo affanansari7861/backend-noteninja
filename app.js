@@ -37,6 +37,7 @@ app.use(
     resave: true,
     saveUninitialized: false,
     sameSite: "none",
+    secure: true,
   })
 );
 app.use(passport.initialize());
