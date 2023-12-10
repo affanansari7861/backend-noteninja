@@ -23,6 +23,13 @@ const app = express();
 const server = require("http").createServer(app);
 
 app.use(
+  cors({
+    origin: [process.env.CLIENT_URL],
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+app.use(
   session({
     secret: "asdf",
     // keys: ["keyasdsa"],
@@ -36,13 +43,6 @@ app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true }));
-app.use(
-  cors({
-    origin: [process.env.CLIENT_URL],
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
 app.use(express.static("./public"));
 
 // routes
