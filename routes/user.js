@@ -37,7 +37,7 @@ router
 
 router.route("/google/redirect").get(
   passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL,
+    successRedirect: "https://note-ninja.netlify.app",
   })
 );
 router.route("/github/redirect").get(
