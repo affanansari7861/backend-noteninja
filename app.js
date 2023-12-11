@@ -1,6 +1,7 @@
 // NPM IMPORTS
 require("dotenv").config();
 require("express-async-errors");
+
 const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
@@ -23,25 +24,31 @@ const app = express();
 const server = require("http").createServer(app);
 
 app.use(
+  session({
+    secret: "somethingsecretgoeshere",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(
   cors({
     origin: [process.env.CLIENT_URL],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
-app.use(
-  session({
-    secret: "asdf",
-    // keys: ["keyasdsa"],
-    maxAge: 1000 * 60 * 60 * 24,
-    resave: true,
-    saveUninitialized: false,
-    sameSite: "none",
-    secure: true,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(
+//   session({
+//     // secret: "asdf",
+//     keys: ["keyasdsa"],
+//     maxAge: 1000 * 60 * 60 * 24,
+//     // sameSite: "none",
+//   })
+// );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true }));
