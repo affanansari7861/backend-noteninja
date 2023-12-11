@@ -5,12 +5,12 @@ require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-const passportSetup = require("./config/passport");
 const session = require("express-session");
 // const session = require("cookie-session");
 const passport = require("passport");
 
 // * LOCAL IMPORTS
+require("./config/passport");
 const connectDB = require("./db/connect");
 const userRouter = require("./routes/user");
 const uploadsRouter = require("./routes/uploads");
@@ -22,32 +22,23 @@ const errorHandler = require("./middlewares/error-handler");
 
 const app = express();
 const server = require("http").createServer(app);
-
-app.use(
-  session({
-    secret: "somethingsecretgoeshere",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL],
+    origin: ["http://localhost:5173", "https://note-ninja.netlify.app"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
-// app.use(
-//   session({
-//     // secret: "asdf",
-//     keys: ["keyasdsa"],
-//     maxAge: 1000 * 60 * 60 * 24,
-//     // sameSite: "none",
-//   })
-// );
+app.use(
+  session({
+    secret: "asdf",
+    resave: true,
+    saveUninitialized: true,
+    maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
