@@ -26,7 +26,7 @@ const server = require("http").createServer(app);
 app.use(
   session({
     secret: "somethingsecretgoeshere",
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: { secure: true },
   })
