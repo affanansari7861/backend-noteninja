@@ -44,14 +44,14 @@ app.use(
   session({
     secret: "asdf",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     // maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
     name: "token",
-    // cookie: {
-    //   maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
-    //   secure: true,
-    //   sameSite: "none",
-    // },
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
+      secure: true,
+      sameSite: "none",
+    },
     store: store,
   })
 );
