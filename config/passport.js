@@ -10,12 +10,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const GTIHUBSTRATEGY = require("passport-github2").Strategy;
 
 passport.serializeUser((user, done) => {
-  console.log(user.username, "sserialized user");
   done(null, user._id);
 });
 passport.deserializeUser(async (id, done) => {
   const user = await User.findById(id);
-  console.log(user.username, "deserialized user");
   done(null, user);
 });
 //LOCAL STRATEGY
@@ -52,7 +50,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log("loging with google");
         const user = await User.find({ googleId: profile.id });
         if (user[0]) return done(null, user[0]);
 
