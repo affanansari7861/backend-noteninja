@@ -35,8 +35,11 @@ app.use(
     resave: true,
     saveUninitialized: true,
     // maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
+    name: "token",
     cookie: {
       maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
+      secure: true,
+      sameSite: "none",
     },
   })
 );
