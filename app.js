@@ -15,6 +15,7 @@ const connectDB = require("./db/connect");
 const userRouter = require("./routes/user");
 const uploadsRouter = require("./routes/uploads");
 const notesRouter = require("./routes/notes");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 //* MIDDLEWARE IMPORTS
 const notFound = require("./middlewares/not-found");
@@ -29,6 +30,16 @@ app.use(
     credentials: true,
   })
 );
+
+// session store
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  databaseName: "NOTENNJA",
+  collection: "mySessions",
+});
+
+app.set("trust proxy", 1);
+
 app.use(
   session({
     secret: "asdf",
@@ -36,13 +47,12 @@ app.use(
     saveUninitialized: true,
     // maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
     name: "token",
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
-      secure: true,
-      sameSite: "none",
-      httpOnly: false,
-    },
-    // proxy:true,
+    // cookie: {
+    //   maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
+    //   secure: true,
+    //   sameSite: "none",
+    // },
+    store: store,
   })
 );
 app.use(passport.initialize());
