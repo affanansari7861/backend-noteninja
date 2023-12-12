@@ -33,7 +33,7 @@ app.use(
   session({
     secret: "asdf",
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     // maxAge: 1000 * 60 * 60 * 60 * 24 * 7,
     name: "token",
     cookie: {
@@ -41,6 +41,7 @@ app.use(
       secure: true,
       sameSite: "lax",
     },
+    // proxy:true,
   })
 );
 app.use(passport.initialize());
